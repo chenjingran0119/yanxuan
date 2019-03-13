@@ -5,6 +5,7 @@ import Profile from '../pages/Profile/Profile.vue'
 import Topic from '../pages/Topic/Topic.vue'
 import Search from '../pages/Search/Search.vue'
 import CateList from '../pages/Cate/CateList.vue'
+import Tab from '../pages/Topic/Tab.vue'
 
 export default [
   {
@@ -51,10 +52,16 @@ export default [
   {
     path:'/topic',
     component:Topic,
+    redirect:'/topic/tab/0',
     meta: {
       showFooter:true
-    }
-
+    },
+    children:[
+      {
+        path:'/topic/tab/:id',
+        component:Tab,
+      }
+    ]
   },
   {
     path:'/',

@@ -1,1 +1,7 @@
 export const RECEIVE_CATE = 'receive_cate'
+export const RECEIVE_SEARCH='receive_search'
+export const RECEIVE_SHOUYEDATA = 'receive_shouyedata'
+export const RECEIVE_TOPICDATA='receive_topicdata'
+export const RECEIVE_RECOMMENDDATA = 'receive_recommenddata'
+export const RECEIVE_MORE_RECOMMENDDATA = 'receive_more_recommenddata'
+export const RECEIVE_TABDATA = 'receive_tabdata'

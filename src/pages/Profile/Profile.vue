@@ -53,17 +53,17 @@
         <div class="content">
           <div class="form">
             <div class="phoneNum">
-              <input type="text" placeholder="请输入手机号">
+              <input type="text" placeholder="请输入手机号" v-model="phone">
             </div>
             <div class="yanzhengma">
-              <input type="text" placeholder="请输入短信验证码">
+              <input type="text" placeholder="请输入短信验证码" v-model="code">
               <div class="button">获取验证码</div>
             </div>
             <div class="meetproblem">
               <span class="problem">遇到问题？</span>
               <span class="yanzhengmalogin">使用密码验证登录</span>
             </div>
-            <div class="go">登录</div>
+            <div class="go" @click="login">登录</div>
             <div class="other" @click="setLoginway(3)">其他登录方式</div>
             <div class="bottom">
               <span>注册账号</span>
@@ -79,7 +79,7 @@
         <div class="content">
           <div class="form">
             <div class="phoneNum">
-              <input type="text" placeholder="邮箱账号">
+              <input type="text" placeholder="邮箱账号" v-model="email">
             </div>
             <div class="yanzhengma">
               <input type="text" placeholder="密码">
@@ -88,7 +88,7 @@
               <span class="problem">注册账号</span>
               <span class="yanzhengmalogin">忘记密码</span>
             </div>
-            <div class="go">登录</div>
+            <div class="go" @click="login">登录</div>
             <div class="other" @click="setLoginway(3)">其他登录方式</div>
           </div>
         </div>
@@ -106,7 +106,10 @@
     export default {
       data(){
         return {
-          loginway:3//0代表手机登录，1代表邮箱登录,2代表注册，3代表个人页
+          loginway:3,//0代表手机登录，1代表邮箱登录,2代表注册，3代表个人页
+          phone:'',  //手机号
+          code:'',//手机验证码
+          email:''  //邮箱
         }
       },
       methods:{
@@ -114,6 +117,23 @@
           this.loginway=way
           console.log(this.loginway)
 
+        },
+        login(){
+          const {loginway,phone,code,email}=this
+          if(loginway===0){//短信
+            if(!(/^1[34578]\d{9}$/.test(phone))){
+              alert('请输入正确手机号')
+              return
+            }else if(!/^\d{6}$/.test(code)){
+              alert('验证码必须是6位数字')
+              return
+            }
+          }else if(loginway===1){//邮箱
+            if(!(/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(email))){
+              alert('请输入正确的邮箱')
+              return
+            }
+          }
         }
 
       }

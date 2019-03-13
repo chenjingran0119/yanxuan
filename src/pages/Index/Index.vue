@@ -13,16 +13,16 @@
       <div class="nav">
         <div class="tabs">
           <ul class="tabs-inner">
-            <li>推荐</li>
-            <li>居家生活</li>
-            <li>服饰鞋包</li>
-            <li>美食酒水</li>
-            <!--<li>个护清洁</li>-->
-            <!--<li>母婴亲子</li>-->
-            <!--<li>运动旅行</li>-->
-            <!--<li>数码家电</li>-->
-            <!--<li>礼品特色</li>-->
-          </ul>
+              <li>推荐</li>
+              <li>居家生活</li>
+              <li>服饰鞋包</li>
+              <li>美食酒水</li>
+              <li>个护清洁</li>
+              <li>母婴亲子</li>
+              <li>运动旅行</li>
+              <li>数码家电</li>
+              <li>礼品特色</li>
+            </ul>
         </div>
         <div class="down" >
           <span class="iconfont icon-down"/>
@@ -84,47 +84,12 @@
       </div>
 
       <!--shopNav-->
-      <ul class="shopNav">
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" alt="">
-          <span>居家生活</span>
+      <ul class="shopNav" v-if="shouyeData.kingKongModule">
+        <li v-for="(item,index) in shouyeData.kingKongModule.kingKongList" :key="index">
+          <img :src="item.picUrl" v-lazy="item.picUrl" alt="">
+          <span>{{item.text}}</span>
         </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/855a0ee7410f534f3db3f7f3a687c153.png" alt="">
-          <span>服饰鞋包</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png" alt="">
-          <span>美食酒水</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/40e494813fae78a483483d32fd7338b1.png" alt="">
-          <span>个护清洁</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/8fab9e34dd0f078fc85dedfa8478b3d5.png" alt="">
-          <span>限时购</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/449019db4190bf9ae98b7f2d62d42e26.png" alt="">
-          <span>母婴亲子</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/50acb3ffe87d9ef77834eb379fe017cc.png" alt="">
-          <span>运动旅行</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/78616d875a47d3f4639f8448775b138e.png" alt="">
-          <span>数码家电</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/21fd4a2a1cf38ce43c2b23825e5508a8.png" alt="">
-          <span>礼品特色</span>
-        </li>
-        <li>
-          <img src="http://yanxuan.nosdn.127.net/073855a1da7a21bf3cab628b99688cc1.png" alt="">
-          <span>超级会员</span>
-        </li>
+
       </ul>
 
       <!--m-indexBigPromotionModule（献礼女王）-->
@@ -186,7 +151,7 @@
         <div class="moduleTitle">
           <span>私人定制</span>
         </div>
-        <div class="swiper-container privateSw">
+        <div class="swiper-container" id="swiper2">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <ul>
@@ -313,11 +278,36 @@
                 </ul>
               </div>
             </div>
-            <div class="swiper-pagination privateSw"></div>
+            <div class="swiper-pagination" id="swp2"></div>
           </div>
       </div>
 
+      <!--限时购-->
+      <div class="limit">
+        <div class="moduleTitle">
+          <div class="left">
+            <span>限时购</span>
+            <div class="time">
+              <div class="black">
+                <span>02</span>
+              </div>
+              <span>:</span>
+              <div class="black">
+                <span>45</span>
+              </div>
+              <span>:</span>
+              <div class="black">
+                <span>01</span>
+              </div>
+            </div>
+          </div>
+          <div class="more">
+            <span>更多</span>
+            <span class="iconfont icon-icon_next_arrow"></span>
+          </div>
+        </div>
 
+      </div>
 
 <!--填充-->
       <div class="padding"></div>
@@ -331,11 +321,16 @@
     import Swiper from 'swiper'
     import 'swiper/dist/css/swiper.css'
     import Split from '../../components/Split/Split.vue'
+    import BScroll from 'better-scroll'
+    import {mapState} from 'vuex'
     export default {
       data(){
         return {
           isAll:false
         }
+      },
+      computed:{
+        ...mapState(['shouyeData'])
       },
       methods:{
         goto(path) {
@@ -367,15 +362,19 @@
             return customPaginationHtml;
           }
         })
-        new Swiper ('.swiper-container,.privateSw', {
+        new Swiper ('#swiper2 ', {
           loop: true,
           pagination: {
             el: '.swiper-pagination',
             clickable: true,
-
           },
         })
+        new BScroll('.tabs',{
+          scrollX: true,
+          click:true,
 
+        })
+        this.$store.dispatch('getShouyeData')
       },
 
     }
@@ -384,6 +383,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
  .indexContainer
    position relative
+   background #f4f4f4
    .header
     height 148px
     background #fff
@@ -436,22 +436,25 @@
       width 750px
       height 60px
       .tabs
-        width 650px
-        height 60px
-        .tabs-inner
-          display flex
-          padding-left 30px
-          li
-            color #666
-            font-size 28px
-            height 60px
-            line-height 60px
-            padding 0 16px
-            margin-left 20px
-            &:nth-child(1)
-               color #b4282d
-               border-bottom 2px solid #b4282d
-               margin-left 0
+          height 60px
+          width 650px
+          overflow hidden
+          .tabs-inner
+            display flex
+            width 1000px
+            padding-left 30px
+            white-space nowrap
+            li
+              color #666
+              font-size 28px
+              height 60px
+              line-height 60px
+              padding 0 16px
+              margin-left 20px
+              &:nth-child(1)
+                 color #b4282d
+                 border-bottom 2px solid #b4282d
+                 margin-left 0
       .down
           width 100px
           height 60px
@@ -493,6 +496,7 @@
 
      .slogon
       height 72px
+      background #fff
       .g-grow
         display flex
         padding 0 30px
@@ -512,6 +516,7 @@
       display flex
       flex-wrap wrap
       padding-bottom 52px
+      background #fff
       li
         margin 10px 20px 9px 20px
         display flex
@@ -531,6 +536,7 @@
       height 430px
       display flex
       flex-wrap wrap
+      background #fff
       .bigImg
         width 750px
         height 197px
@@ -543,11 +549,13 @@
           float right
      .cat
       height 160px
+      background #fff
       img
         height 160px
         width 100%
 
      .m-sceneLightShoppingGuideModule
+      background #fff
       box-sizing border-box
       width 100%
       height 536px
@@ -580,6 +588,8 @@
             margin-right 4px
      .private
       height 470px
+      background #fff
+      margin-bottom 20px
       .moduleTitle
         padding 0 30px
         height 100px
@@ -617,21 +627,63 @@
                     line-height 36px
                   .dynamicPrice
                     color #b4282d
+     .limit
+       width 100%
+       height 700px
+       margin-bottom 20px
+       background #fff
+       display flex
+       .moduleTitle
+         width 690px
+         height 100px
+         padding 0 30px
+         display flex
+         justify-content space-between
+         .left
+           width 290px
+           height 101px
+           display flex
+           line-height 101px
+           span
+             font-size 32px
+             color #333
+           .time
+            display flex
+            width 182px
+            height 100px
+            margin-left 12px
+            align-items  center
+            .black
+              width 36px
+              height 36px
+              background: #333
+              border-radius 0.05333rem
+              text-align center
+              margin 0 10px
+              span
+                color #fff
+                font-size 12px
+
+         .more
+           height 101px
+           line-height 101px
+           font-size 0.37333rem
+           color #333
+           .iconfont
+            font-size 30px
+
+
+
+
+
      .padding
       width 100%
       height 500px
       background yellow
 </style>
 <style>
-    /*包裹自定义分页器的div的位置等CSS样式*/
-  .swiper-pagination-custom {
-    bottom: 10px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-  }
   /*自定义分页器的样式，这个你自己想要什么样子自己写*/
-  .swiper-pagination-customs {
+  .swiper-pagination-custom {
     width: 40px;
     height: 4px;
     display: inline-block;

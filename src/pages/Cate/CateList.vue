@@ -11,7 +11,6 @@
             <div>{{sub.name}}</div>
           </li>
         </ul>
-        <div class="sss"></div>
       </div>
     </div>
 </template>
@@ -26,7 +25,7 @@
       })
     },
     computed:{
-      ...mapState({
+        ...mapState({
         cates:state=>state.cates
       }),
       cateList(){
@@ -44,6 +43,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .cateContainer
     width 528px
+    height 1148px
     overflow hidden
     .scroll
       .topImg
@@ -70,9 +70,4 @@
             text-align center
 
 
-
-      .sss
-        width 50px
-        height 300px
-        background pink
 </style>

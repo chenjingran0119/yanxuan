@@ -6,7 +6,7 @@
       </span>
       <span>首页</span>
     </a>
-    <a href="javascript:;" class="guide_item" :class="{on:$route.path==='/cate'}" @click="goto('/cate')">
+    <a href="javascript:;" class="guide_item" :class="{on:$route.path==='/cate/cateList'}" @click="goto('/cate')">
       <span class="item_icon">
         <i class="iconfont icon-leimupinleifenleileibie"></i>
       </span>

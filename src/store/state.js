@@ -1,4 +1,10 @@
 export default {
   cates:[],
-  cateList:[]
+  cateList:[],
+  search:[],
+  shouyeData:[],
+  topicData:[],
+  recommendData:[],
+  moreRecommendData: [],
+  tabData:[]
 }

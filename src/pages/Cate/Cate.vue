@@ -30,7 +30,7 @@
     import {mapState} from 'vuex'
     import {reqCate} from '../../api'
     export default {
-      async mounted(){
+      mounted(){
         this.$store.dispatch('getCate')
         const leftScroll = new BScroll('.left',{
           click:true
@@ -79,7 +79,6 @@
           padding 40px 0
           width 162px
           height 100%
-          background pink
           display flex
           flex-direction column
           .item
